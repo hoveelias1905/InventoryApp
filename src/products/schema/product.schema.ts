@@ -15,7 +15,7 @@ export class Products {
     storeID: Types.ObjectId
 
 
-    @Prop({ required: true, unique: true, type: productCategories })
+    @Prop({ required: true, unique: true, enum: productCategories })
     category: productCategories
 
     @Prop({ required: true, unique: true })
