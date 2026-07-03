@@ -11,14 +11,14 @@ export class Users {
     @Prop({ required: true, unique: true })
     username: string
 
-    @Prop({ required: true })
+    @Prop({ required: true, select:false})
     password: string
 
     @Prop({ required: true, type: userTypes })
     userType: userTypes
 
-    @Prop({ required: true })
-    contact: number
+    @Prop({ required: false })
+    contact?: number
 
     @Prop({type:Types.ObjectId, ref: Stores.name })
     storeID: Types.ObjectId
