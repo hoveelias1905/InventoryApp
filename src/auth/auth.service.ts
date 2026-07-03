@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class AuthService {
+  constructor(@InjectModel(User.name))
   create(createAuthDto: CreateAuthDto) {
     return 'This action adds a new auth';
   }
