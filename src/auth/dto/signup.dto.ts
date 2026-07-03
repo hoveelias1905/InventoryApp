@@ -1,4 +1,4 @@
-import {UserDto} from '.../users/dto/createuser.dto.ts'
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 export class SignUpDto extends CreateUserDto{
 
 }
