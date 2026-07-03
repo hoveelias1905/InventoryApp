@@ -7,10 +7,11 @@ import { ProductsModule } from './products/products.module';
 import { StoresModule } from './stores/stores.module';
 import { ChatsModule } from './chats/chats.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [UsersModule, AuthModule, ProductsModule, StoresModule, ChatsModule,
-    MongooseModule.forRoot(process.env.MONGO_URI)
+    ConfigModule.forRoot({isGlobal:true}),MongooseModule.forRoot(process.env.MONGO_URI)
   ],
   controllers: [AppController],
   providers: [AppService],

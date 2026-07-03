@@ -1,7 +1,7 @@
 
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import { Types } from 'mongoose'
-import { Stores } from 'src/stores/schema/store.schema'
+import { Stores } from '../../stores/schema/store.schema'
 
 export enum productCategories {
     'food',
@@ -15,7 +15,7 @@ export class Products {
     storeID: Types.ObjectId
 
 
-    @Prop({ required: true, unique: true, type: productCategories })
+    @Prop({ required: true, unique: true, enum: productCategories })
     category: productCategories
 
     @Prop({ required: true, unique: true })
