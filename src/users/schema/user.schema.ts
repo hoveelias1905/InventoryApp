@@ -3,8 +3,8 @@ import { Types } from 'mongoose'
 import { Stores } from '../../stores/schema/store.schema'
 
 export enum userTypes {
-    'cashier',
-    'admin'
+    cashier='cashier',
+    admin='admin'
 }
 @Schema()
 export class Users {
@@ -20,8 +20,8 @@ export class Users {
     @Prop({ required: false })
     contact?: number
 
-    @Prop({type:Types.ObjectId, ref: Stores.name })
-    storeID: Types.ObjectId
+    @Prop({ref: Stores.name })
+    storeID: string
 
 }
 

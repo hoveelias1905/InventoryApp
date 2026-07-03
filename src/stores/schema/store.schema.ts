@@ -15,8 +15,6 @@ export class Stores {
     @Prop({ required: true })
     address: string
 
-
-
 }
 
 export const StoreSchema = SchemaFactory.createForClass(Stores)

@@ -22,6 +22,6 @@ export class CreateUserDto{
         
     @IsString()
     @IsNotEmpty()
-    storeID:Types.ObjectId
+    storeID:string
     
 }

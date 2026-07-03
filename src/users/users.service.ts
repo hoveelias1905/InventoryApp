@@ -6,17 +6,18 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt'
 import { Stores } from '../stores/schema/store.schema';
+import { StoresService } from '../stores/stores.service';
 
 @Injectable()
 export class UsersService {
-    constructor(@InjectModel(Users.name) private userModel: Model<Users>,@InjectModel(Stores.name) private storesModel: Model<Stores>) { }
-
-    async createNewUser({ username, ...createUserDto }: CreateUserDto) {
-        this.validateUsername(username);
+    constructor(@InjectModel(Users.name) private userModel: Model<Users>,@InjectModel(Stores.name) private storesModel: Model<Stores>,private storeService:StoresService) { }
+    async createNewUser({ username, storeID,...createUserDto }: CreateUserDto) {
+        await   this.validateUsername(username);
+      await  this.storeService.getStoreByID(storeID);
 
         const hashedPassword = await bcrypt.hash(createUserDto.password, 10)
         const newUser = new this.userModel({
-            username, ...createUserDto, password: hashedPassword
+            username, ...createUserDto, password: hashedPassword,storeID:storeID
         })
         await newUser.save()
         const { password: _, ...result } = newUser.toObject()
@@ -51,7 +52,6 @@ export class UsersService {
         if (!Types.ObjectId.isValid(id)) {
             throw new HttpException('Invalid ObjectID', 401)
         }
-        console.log('validated')
 
     }
 

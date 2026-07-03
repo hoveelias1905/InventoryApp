@@ -1,35 +1,60 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateStoreDto } from './dto/create-store.dto';
 import { UpdateStoreDto } from './dto/update-store.dto';
-import { Users } from '../users/schema/user.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Stores } from './schema/store.schema';
-import { Products } from '../products/schema/product.schema';
+import { after } from 'node:test';
 
 @Injectable()
 export class StoresService {
-      constructor(@InjectModel(Users.name) private userModel: Model<Users>,
-      @InjectModel(Stores.name) private storesModel: Model<Stores>,
-      @InjectModel(Products.name) private prodcuctsModel: Model<Products>) { }
-  
-  create(createStoreDto: CreateStoreDto) {
-    return 'This action adds a new store';
+  constructor(@InjectModel(Stores.name) private storeModel: Model<Stores>) { }
+
+  async createStore({ storeID, ...createStoreDto }: CreateStoreDto) {
+    await this.validateStoreID(storeID);
+
+    const newStore = new this.storeModel({
+      storeID, ...createStoreDto
+    })
+    return await newStore.save()
   }
 
-  findAll() {
-    return `This action returns all stores`;
+  async updateStore(id: string, updateStoreDto: UpdateStoreDto) {
+    await this.getStoreByID(id)
+    const updatedStore = await this.storeModel.findOneAndUpdate({storeID:id}, updateStoreDto,{returnDocument:'after'})
+    return updatedStore;
+
+  }
+  async getAllStores() {
+    return await this.storeModel.find()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} store`;
+  async getStoreByID(id: string) {
+    await this.validateStoreID(id)
+    const store = await this.storeModel.findOne({storeID:id})
+
+    if (!store) {
+      throw new NotFoundException('Store Not Found')
+    }
+    return store;
   }
 
-  update(id: number, updateStoreDto: UpdateStoreDto) {
-    return `This action updates a #${id} store`;
+
+  async deleteStore(id: string) {
+    await this.getStoreByID(id)
+    await this.storeModel.findOneAndDelete({storeID:id})
+    return `Deleted ${id} succesfully`
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} store`;
+  validateStoreID(id: string) {
+    if (id.length !== 6) {
+      throw new HttpException("Use a valid storeID, has 6 characters", 400)
+    }
+    if (!id.startsWith('STO', 0)) {
+      throw new HttpException("Use a valid storeID, starts With 'STO'", 400)
+    }
+
   }
+
+
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { StoresService } from './stores.service';
 import { CreateStoreDto } from './dto/create-store.dto';
 import { UpdateStoreDto } from './dto/update-store.dto';
@@ -8,27 +8,32 @@ export class StoresController {
   constructor(private readonly storesService: StoresService) {}
 
   @Post()
-  create(@Body() createStoreDto: CreateStoreDto) {
-    return this.storesService.create(createStoreDto);
+  @UsePipes(new ValidationPipe)
+  async createStore(@Body() createStoreDto: CreateStoreDto) {
+    return await this.storesService.createStore(createStoreDto);
   }
 
   @Get()
-  findAll() {
-    return this.storesService.findAll();
+  @UsePipes(new ValidationPipe)
+ async getAllStores() {
+    return await  this.storesService.getAllStores();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.storesService.findOne(+id);
+  @Get('/find/:id')
+  @UsePipes(new ValidationPipe)
+  async findStore(@Param('id') storeID: string) {
+    return  await this.storesService.getStoreByID(storeID);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto) {
-    return this.storesService.update(+id, updateStoreDto);
+  @UsePipes(new ValidationPipe)
+  async update(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto) {
+    return await  this.storesService.updateStore(id, updateStoreDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.storesService.remove(+id);
+  @Delete('/delete/:id')
+  @UsePipes(new ValidationPipe)
+  async deleteStore(@Param('id') id: string) {
+    return await this.storesService.deleteStore(id);
   }
 }
