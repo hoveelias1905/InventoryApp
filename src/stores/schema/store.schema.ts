@@ -20,4 +20,4 @@ export class Stores {
 }
 
 export const StoreSchema = SchemaFactory.createForClass(Stores)
-StoreSchema.index({ storeID: 1 })
+StoreSchema.index({ storeID: 1,manager:1})
