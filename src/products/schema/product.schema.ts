@@ -4,8 +4,8 @@ import { Types } from 'mongoose'
 import { Stores } from '../../stores/schema/store.schema'
 
 export enum productCategories {
-    'food',
-    'drink'
+    food='food',
+    drink='drink'
 }
 @Schema()
 export class Products {

@@ -1,4 +1,4 @@
-import { IsEnum, IsInt, IsNotEmpty, IsString } from "class-validator";
+import { IsEnum, IsInt, IsNotEmpty, IsString, MaxLength} from "class-validator";
 import { productCategories } from "../schema/product.schema";
 
 export class CreateProductDto {
@@ -14,6 +14,7 @@ export class CreateProductDto {
 
     @IsString()
     @IsNotEmpty()
+    @MaxLength(6)
     productID:string
     
     @IsString()
