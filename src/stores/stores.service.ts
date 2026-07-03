@@ -1,15 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { CreateStoreDto } from './dto/create-store.dto';
 import { UpdateStoreDto } from './dto/update-store.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Store } from './entities/store.entity';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class StoresService {
+  constructor(@InjectModel(Store.name) private storesModel: Model<Store>){}
   create(createStoreDto: CreateStoreDto) {
-    return 'This action adds a new store';
+    
   }
 
-  findAll() {
-    return `This action returns all stores`;
+  async findAll() {
+     return await `This action returns all stores`;
   }
 
   findOne(id: number) {
