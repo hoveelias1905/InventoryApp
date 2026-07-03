@@ -5,10 +5,11 @@ import { Model, Types } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt'
+import { Stores } from '../stores/schema/store.schema';
 
 @Injectable()
 export class UsersService {
-    constructor(@InjectModel(Users.name) private userModel: Model<Users>) { }
+    constructor(@InjectModel(Users.name) private userModel: Model<Users>,@InjectModel(Stores.name) private storesModel: Model<Stores>) { }
 
     async createNewUser({ username, ...createUserDto }: CreateUserDto) {
         this.validateUsername(username);

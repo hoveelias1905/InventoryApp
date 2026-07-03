@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -8,27 +8,30 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productsService.create(createProductDto);
+  @UsePipes(ValidationPipe)
+  async createNewProduct(@Body() createProductDto: CreateProductDto) {
+    return await this.productsService.createNewProduct(createProductDto)
   }
 
   @Get()
-  findAll() {
-    return this.productsService.findAll();
+  findAllProducts() {
+    return this.productsService.findAllProducts();
   }
 
   @Get(':id')
+  @UsePipes(ValidationPipe)
   findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+    return this.productsService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productsService.update(+id, updateProductDto);
+  @Patch(':productid')
+  @UsePipes(ValidationPipe)
+  update(@Param('productid') productid: string, @Body() updateProductDto: UpdateProductDto) {
+    return this.productsService.updateProduct(productid,updateProductDto)
   }
-
   @Delete(':id')
+  @UsePipes(ValidationPipe)
   remove(@Param('id') id: string) {
-    return this.productsService.remove(+id);
+    return this.productsService.deleteProduct(id);
   }
 }

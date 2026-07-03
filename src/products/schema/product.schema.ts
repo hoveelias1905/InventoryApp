@@ -1,11 +1,11 @@
 
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import { Types } from 'mongoose'
-import { Stores } from 'src/stores/schema/store.schema'
+import { Stores } from '../../stores/schema/store.schema'
 
 export enum productCategories {
-    'food',
-    'drink'
+    food='food',
+    drink='drink'
 }
 @Schema()
 export class Products {

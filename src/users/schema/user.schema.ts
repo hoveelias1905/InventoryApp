@@ -1,6 +1,6 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose'
 import { Types } from 'mongoose'
-import { Stores } from 'src/stores/schema/store.schema'
+import { Stores } from '../../stores/schema/store.schema'
 
 export enum userTypes {
     'cashier',
@@ -14,7 +14,7 @@ export class Users {
     @Prop({ required: true, select:false})
     password: string
 
-    @Prop({ required: true, enum: userTypes })
+    @Prop({ required: true, enum: userTypes})
     userType: userTypes
 
     @Prop({ required: false })
@@ -26,4 +26,3 @@ export class Users {
 }
 
 export const UserSchema = SchemaFactory.createForClass(Users)
-UserSchema.index({ username: 1 })
