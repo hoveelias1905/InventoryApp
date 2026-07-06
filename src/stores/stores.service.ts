@@ -1,14 +1,14 @@
-import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateStoreDto } from './dto/create-store.dto';
 import { UpdateStoreDto } from './dto/update-store.dto';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Stores } from './schema/store.schema';
-import { after } from 'node:test';
+import { Products } from '../products/schema/product.schema';
 
 @Injectable()
 export class StoresService {
-  constructor(@InjectModel(Stores.name) private storeModel: Model<Stores>) { }
+  constructor(@InjectModel(Stores.name) private storeModel: Model<Stores>,@InjectModel(Products.name) private productModel: Model<Products>) { }
 
   async createStore({ storeID, ...createStoreDto }: CreateStoreDto) {
     await this.validateStoreID(storeID);
@@ -39,7 +39,13 @@ export class StoresService {
     return store;
   }
 
-
+async getMyProducts(storeID:string)
+{
+  console.log(storeID)
+  await this.getStoreByID(storeID)
+  const products = await this.productModel.find({storeID:storeID}).select('productID productName quantity price')
+  return  products;
+}
   async deleteStore(id: string) {
     await this.getStoreByID(id)
     await this.storeModel.findOneAndDelete({storeID:id})
@@ -47,6 +53,9 @@ export class StoresService {
   }
 
   validateStoreID(id: string) {
+    if (!id) {
+      throw new BadRequestException('Store ID is required');
+  }
     if (id.length !== 6) {
       throw new HttpException("Use a valid storeID, has 6 characters", 400)
     }
@@ -55,6 +64,5 @@ export class StoresService {
     }
 
   }
-
 
 }

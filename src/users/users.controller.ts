@@ -34,9 +34,9 @@ export class UsersController {
         return this.userService.getAllUsers();
     }
 
-    @Get()
+    @Get(':id')
     @UsePipes(new ValidationPipe)
-    async getUserByID(id: string) {
+    async getUserByID(@Param('id')id: string) {
         return await this.userService.getUserByID(id)
     }
 }
