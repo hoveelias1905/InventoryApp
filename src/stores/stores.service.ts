@@ -31,10 +31,10 @@ export class StoresService {
 
   async getStoreByID(id: string) {
     await this.validateStoreID(id)
-    const store = await this.storeModel.findOne({storeID:id})
+    const store = await this.storeModel.findOne({id})
 
     if (!store) {
-      throw new NotFoundException('Store Not Found')
+     throw new NotFoundException('Store Not Found')
     }
     return store;
   }

@@ -8,10 +8,12 @@ import { StoresModule } from './stores/stores.module';
 import { ChatsModule } from './chats/chats.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [UsersModule, AuthModule, ProductsModule, StoresModule, ChatsModule,
-    ConfigModule.forRoot({isGlobal:true}),MongooseModule.forRoot(process.env.MONGO_URI)
+    ConfigModule.forRoot({isGlobal:true}),MongooseModule.forRoot(process.env.MONGO_URI),
+    JwtModule.register({global:true, secret:'1234'})
   ],
   controllers: [AppController],
   providers: [AppService],
