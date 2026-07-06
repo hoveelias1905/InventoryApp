@@ -15,13 +15,13 @@ export class Products {
     storeID: Types.ObjectId
 
 
-    @Prop({ required: true, unique: true, enum: productCategories })
+    @Prop({ required: true, enum: productCategories })
     category: productCategories
 
     @Prop({ required: true, unique: true })
     productID: string
 
-    @Prop({ required: true, unique: true })
+    @Prop({ required: true, unique:true})
     productName: string
 
 

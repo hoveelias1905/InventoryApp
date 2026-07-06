@@ -13,7 +13,7 @@ export class ProductsController {
     return await this.productsService.createNewProduct(createProductDto)
   }
 
-  @Get()
+  @Get('/allProducts')
   findAllProducts() {
     return this.productsService.findAllProducts();
   }
@@ -21,7 +21,7 @@ export class ProductsController {
   @Get(':id')
   @UsePipes(ValidationPipe)
   findOne(@Param('id') id: string) {
-    return this.productsService.findOne(id);
+    return this.productsService.findOneProduct(id);
   }
 
   @Patch(':productid')

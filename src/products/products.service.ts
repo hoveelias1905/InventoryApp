@@ -5,42 +5,43 @@ import { Stores } from '../stores/schema/store.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Products } from './schema/product.schema';
+import { StoresService } from '../stores/stores.service';
 
 @Injectable()
 export class ProductsService {
-  constructor(@InjectModel(Stores.name) private storeModel: Model<Stores>,
-        @InjectModel(Products.name) private prodcuctModel: Model<Products>) {}
+  constructor(
+        @InjectModel(Products.name) private prodcuctModel: Model<Products>, private storesService: StoresService) {}
 
 
-  async createNewProduct(createProductDto: CreateProductDto) {
-    this.validateProductID(createProductDto.productID)
-    const find = await this.findOne(createProductDto.productID);
+  async createNewProduct({storeID,...createProductDto}: CreateProductDto) {
+    await this.storesService.getStoreByID(storeID);
+    const find = await this.productValiateExist(createProductDto.productID);
+    
     if (!find){
       const product = new this.prodcuctModel(createProductDto);
       return  product.save()
     }
-    return new ConflictException('Product alredy exists')
   }
 
   async findAllProducts() {
     return await this.prodcuctModel.find()
   }
 
-  async findOne(productID: string) {
+  async findOneProduct(productID: string) {
     this.validateProductID(productID)
-    const product = await this.prodcuctModel.findOne({productID});
-    if (!product){ return new NotFoundException('Product not found')}
+    const product = await this.prodcuctModel.findOne({productID:productID});
+    if (!product){ throw new NotFoundException('Product not found')}
     return product
   }
 
   async updateProduct(productID: string,updateProductDto: UpdateProductDto) {
     this.validateProductID(productID)
-    this.findOne(productID)
+    this.findOneProduct(productID)
     return await this.prodcuctModel.findOneAndUpdate({productID:productID},updateProductDto,{returnDocument:'after'})
   }
 
  async deleteProduct(productID:string) {
-  this.findOne(productID)
+  this.findOneProduct(productID)
      return await this.prodcuctModel.findOneAndDelete({productID:productID})
   }
 
@@ -49,6 +50,12 @@ export class ProductsService {
       return new HttpException('InvalidID must start with PRD',401)
     }
     console.log("")
+  }
+
+  async productValiateExist(productID){
+    const exist= await this.prodcuctModel.findOne({productID})
+    if (exist){ throw new ConflictException('ProductID alreday exist')}
+    return null
   }
 
 }
