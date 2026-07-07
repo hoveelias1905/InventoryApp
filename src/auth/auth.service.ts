@@ -6,7 +6,7 @@ import { Model, Types } from 'mongoose';
 import * as bcrypt from 'bcrypt'
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
-import { StoresService } from '../stores/stores.service';
+import { StoresService, ValidationMode } from '../stores/stores.service';
 import { RefreshToken } from './schema/refreshTokens.schema';
 import { v4 as uuidv4 } from 'uuid';
 
