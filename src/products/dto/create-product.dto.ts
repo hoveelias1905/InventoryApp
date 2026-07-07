@@ -1,4 +1,4 @@
-import { IsEnum, IsInt, IsNotEmpty, IsString, MaxLength} from "class-validator";
+import { IsDecimal, IsEnum, IsInt, IsNotEmpty, IsString, Length, Matches, MaxLength, Min} from "class-validator";
 import { productCategories } from "../schema/product.schema";
 
 export class CreateProductDto {
@@ -14,7 +14,8 @@ export class CreateProductDto {
 
     @IsString()
     @IsNotEmpty()
-    @MaxLength(6)
+    @Length(6,6)
+    @Matches(/^PRD[0-9]{3}$/, { message: 'Product ID must start with PRD followed by 3 digits' })
     productID:string
     
     @IsString()
@@ -23,9 +24,10 @@ export class CreateProductDto {
 
     @IsInt()
     @IsNotEmpty()
+    @Min(0)
     quantity: number
 
-    @IsInt()
+    @IsDecimal()
     @IsNotEmpty()
     price: number
 

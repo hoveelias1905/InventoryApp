@@ -7,7 +7,7 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt'
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
-import { StoresService } from '../stores/stores.service';
+import { StoresService, ValidationMode } from '../stores/stores.service';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +18,7 @@ export class AuthService {
   ) {}
 
   async signUp({ username, password, storeID,...signUpDto }: SignUpDto) {
-    await this.storeService.getStoreByID(storeID);
+    await this.storeService.getStoreByID(storeID, ValidationMode.FINDING);
     const user = await this.userModel.findOne({ username });
     if (user) {
       throw new BadRequestException('Username already exist.');

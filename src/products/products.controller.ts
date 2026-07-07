@@ -24,10 +24,16 @@ export class ProductsController {
     return this.productsService.findOneProduct(id);
   }
 
+  @Get('/productsinstore/:id')
+  @UsePipes(new ValidationPipe)
+  async getProductsInThisStore(@Param('id') storeID: string) {
+    return await this.productsService.getProductsInThisStore(storeID);
+  }
+
   @Patch(':productid')
   @UsePipes(ValidationPipe)
-  update(@Param('productid') productid: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productsService.updateProduct(productid,updateProductDto)
+  update(@Param('productid') productID: string, @Body() updateProductDto: UpdateProductDto) {
+    return this.productsService.updateProduct(productID,updateProductDto)
   }
   @Delete(':id')
   @UsePipes(ValidationPipe)

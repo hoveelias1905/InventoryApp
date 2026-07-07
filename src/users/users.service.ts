@@ -6,14 +6,14 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt'
 import { Stores } from '../stores/schema/store.schema';
-import { StoresService } from '../stores/stores.service';
+import { StoresService, ValidationMode } from '../stores/stores.service';
 
 @Injectable()
 export class UsersService {
     constructor(@InjectModel(Users.name) private userModel: Model<Users>,@InjectModel(Stores.name) private storesModel: Model<Stores>,private storeService:StoresService) { }
     async createNewUser({ username, storeID,...createUserDto }: CreateUserDto) {
         await   this.validateUsername(username);
-      await  this.storeService.getStoreByID(storeID);
+      await  this.storeService.getStoreByID(storeID, ValidationMode.FINDING);
 
         const hashedPassword = await bcrypt.hash(createUserDto.password, 10)
         const newUser = new this.userModel({
