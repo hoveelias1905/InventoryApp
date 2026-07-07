@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventory Admin Panel</title>
+    <link rel="stylesheet" href="admin.css" />
+    <script src="admin.responsive.js" defer></script>
+</head>
+<body>
+    <div class="admin-layout" id="admin-dashboard-layout">
+        <aside class="admin-sidebar" id="sidebar-panel">
+            <div class="sidebar-top">
+                <div class="sidebar-brand" id="sidebar-brand">Inventory Admin</div>
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-navigation">
+                <a href="#overview" class="sidebar-link active" id="link-overview">Overview</a>
+                <a href="#products" class="sidebar-link" id="link-products">Products</a>
+                <a href="#stores" class="sidebar-link" id="link-stores">Stores</a>
+                <a href="#users" class="sidebar-link" id="link-users">Users</a>
+                <a href="#settings" class="sidebar-link" id="link-settings">Settings</a>
+            </nav>
+        </aside>
+
+        <main class="admin-content" id="main-dashboard-content">
+            <section class="page-section" id="overview" data-section="overview">
+                <header class="content-header" id="dashboard-header">
+                    <div>
+                        <h1 class="content-title" id="page-title">Operational Dashboard</h1>
+                        <p class="content-subtitle" id="page-subtitle">Manage products, stores, users, and access rules from one secure panel.</p>
+                    </div>
+                    <div class="header-actions" id="header-actions">
+                        <button class="button-secondary" id="action-download-report">Download Report</button>
+                        <button class="button-primary" id="action-add-item">Add New Product</button>
+                    </div>
+                </header>
+
+                <section class="dashboard-grid" id="stats-cards-grid">
+                    <article class="dashboard-card" id="card-total-items">
+                        <div class="card-title">Products</div>
+                        <div class="card-value" id="value-total-items">128</div>
+                        <div class="card-note">Tracked SKUs across all active stores.</div>
+                    </article>
+                    <article class="dashboard-card" id="card-low-stock">
+                        <div class="card-title">Stores</div>
+                        <div class="card-value" id="value-low-stock">12</div>
+                        <div class="card-note">Operational locations registered in the system.</div>
+                    </article>
+                    <article class="dashboard-card" id="card-pending-orders">
+                        <div class="card-title">Users</div>
+                        <div class="card-value" id="value-pending-orders">24</div>
+                        <div class="card-note">Active cashier and admin accounts.</div>
+                    </article>
+                </section>
+            </section>
+
+            <section class="page-section section-panel" id="products" data-section="products" hidden>
+                <div class="panel-heading" id="products-heading">
+                    <div>
+                        <h2>Product Management</h2>
+                        <p class="panel-description" id="products-description">Create and review products with store, category, quantity, and price details.</p>
+                    </div>
+                </div>
+                <div class="panel-grid">
+                    <div class="table-card">
+                        <table class="inventory-table" id="inventory-table">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Product ID</th>
+                                    <th>Product Name</th>
+                                    <th>Qty</th>
+                                    <th>Price</th>
+                                    <th>Store</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="inventory-row" id="row-product-1">
+                                    <td>electronics</td>
+                                    <td>PRD101</td>
+                                    <td>Wireless Keyboard</td>
+                                    <td>64</td>
+                                    <td>$49.00</td>
+                                    <td>STO101</td>
+                                </tr>
+                                <tr class="inventory-row" id="row-product-2">
+                                    <td>hardware</td>
+                                    <td>PRD102</td>
+                                    <td>USB-C Hub</td>
+                                    <td>18</td>
+                                    <td>$29.99</td>
+                                    <td>STO101</td>
+                                </tr>
+                                <tr class="inventory-row" id="row-product-3">
+                                    <td>food</td>
+                                    <td>PRD103</td>
+                                    <td>Fresh Coffee Beans</td>
+                                    <td>12</td>
+                                    <td>$12.50</td>
+                                    <td>STO205</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <form class="stack-form">
+                        <h3>New Product</h3>
+                        <div class="form-row">
+                            <label>Store ID<input type="text" name="storeID" placeholder="STO101" /></label>
+                            <label>Category<select name="category"><option>food</option><option>drink</option><option>electronics</option><option>clothing</option><option>furniture</option><option>hardware</option></select></label>
+                        </div>
+                        <div class="form-row">
+                            <label>Product ID<input type="text" name="productID" placeholder="PRD104" /></label>
+                            <label>Product Name<input type="text" name="productName" placeholder="Portable Scanner" /></label>
+                        </div>
+                        <div class="form-row">
+                            <label>Quantity<input type="number" name="quantity" min="0" value="0" /></label>
+                            <label>Price<input type="number" name="price" step="0.01" min="0" value="0" /></label>
+                        </div>
+                        <button class="button-primary" type="submit">Save Product</button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="page-section section-panel" id="stores" data-section="stores" hidden>
+                <div class="panel-heading" id="stores-heading">
+                    <div>
+                        <h2>Store Management</h2>
+                        <p class="panel-description" id="stores-description">Track store IDs, managers, and delivery addresses for each branch.</p>
+                    </div>
+                </div>
+                <div class="panel-grid">
+                    <div class="table-card">
+                        <table class="inventory-table">
+                            <thead>
+                                <tr>
+                                    <th>Store ID</th>
+                                    <th>Store Name</th>
+                                    <th>Manager</th>
+                                    <th>Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>STO101</td>
+                                    <td>Downtown Hub</td>
+                                    <td>Amelia Ross</td>
+                                    <td>12 River Street</td>
+                                </tr>
+                                <tr>
+                                    <td>STO205</td>
+                                    <td>North Plaza</td>
+                                    <td>Daniel Cruz</td>
+                                    <td>88 Market Avenue</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <form class="stack-form">
+                        <h3>New Store</h3>
+                        <label>Store ID<input type="text" name="storeID" placeholder="STO306" /></label>
+                        <label>Store Name<input type="text" name="storeName" placeholder="West End Branch" /></label>
+                        <label>Manager<input type="text" name="manager" placeholder="Jordan Lee" /></label>
+                        <label>Address<textarea name="address" rows="3" placeholder="Enter full branch address"></textarea></label>
+                        <button class="button-primary" type="submit">Save Store</button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="page-section section-panel" id="users" data-section="users" hidden>
+                <div class="panel-heading" id="users-heading">
+                    <div>
+                        <h2>User Access</h2>
+                        <p class="panel-description" id="users-description">Manage cashier and admin access linked to a store.</p>
+                    </div>
+                </div>
+                <div class="panel-grid">
+                    <div class="table-card">
+                        <table class="inventory-table">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Role</th>
+                                    <th>Store ID</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>nina</td>
+                                    <td>admin</td>
+                                    <td>STO101</td>
+                                </tr>
+                                <tr>
+                                    <td>mike</td>
+                                    <td>cashier</td>
+                                    <td>STO205</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <form class="stack-form">
+                        <h3>Create User</h3>
+                        <label>Username<input type="text" name="username" placeholder="jasmine" /></label>
+                        <label>Password<input type="password" name="password" placeholder="Create a strong password" /></label>
+                        <label>User Type<select name="userType"><option>cashier</option><option>admin</option></select></label>
+                        <label>Store ID<input type="text" name="storeID" placeholder="STO101" /></label>
+                        <button class="button-primary" type="submit">Create User</button>
+                    </form>
+                </div>
+            </section>
+            <section class="page-section section-panel" id="settings" data-section="settings" hidden>
+                <div class="panel-heading">
+                    <div>
+                        <h2>Admin Settings</h2>
+                        <p class="panel-description">Adjust operational preferences for the dashboard.</p>
+                    </div>
+                </div>
+                <form class="stack-form">
+                    <label>Default Store<input type="text" name="defaultStore" value="STO101" /></label>
+                    <label>Alert Threshold<input type="number" name="alertThreshold" value="10" /></label>
+                    <button class="button-primary" type="submit">Save Settings</button>
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

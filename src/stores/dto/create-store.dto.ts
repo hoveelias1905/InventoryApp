@@ -1,11 +1,11 @@
-import { IsNotEmpty, IsString, IsUppercase, length, MaxLength, MinLength } from "class-validator";
+import { IsNotEmpty, IsString, IsUppercase, Length, length, Matches, MaxLength, MinLength } from "class-validator";
 export class CreateStoreDto {
 
     @IsString()
     @IsNotEmpty()
     @IsUppercase()
-    @MaxLength(6)
-    @MinLength(6)
+    @Length(6,6)
+    @Matches(/^STO[0-9]{3}$/, { message: 'storeID must start with STO followed by 3 digits' })
     storeID:string
 
     @IsString()

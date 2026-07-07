@@ -26,3 +26,6 @@ export class Users {
 }
 
 export const UserSchema = SchemaFactory.createForClass(Users)
+UserSchema.index({ userType: 1 ,  username: 1 })
+UserSchema.index({ storeID: 1, username: 1 })
+

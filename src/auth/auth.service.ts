@@ -20,7 +20,7 @@ export class AuthService {
   ) {}
 
   async signUp({ username, password, storeID,...signUpDto }: SignUpDto) {
-    await this.storeService.getStoreByID(storeID);
+    await this.storeService.getStoreByID(storeID, ValidationMode.FINDING);
     const user = await this.userModel.findOne({ username });
     if (user) {
       throw new BadRequestException('Username already exist.');

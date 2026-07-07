@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Inventory App | Cashier</title>
+        <link rel="stylesheet" href="index.css" />
+        <script src="index.js" defer></script>
+    </head>
+    <body>
+        <div class="app-shell">
+            <aside class="app-sidebar">
+                <div class="sidebar-top">
+                    <div class="sidebar-brand">Cashier POS</div>
+                    <button class="mobile-nav-toggle" aria-label="Toggle navigation">☰</button>
+                </div>
+                <nav class="sidebar-nav">
+                    <a href="#pos" class="sidebar-link active">POS</a>
+                    <a href="#settings" class="sidebar-link">Settings</a>
+                    <a href="../Auth/login/login.html" class="sidebar-link">Sign Out</a>
+                </nav>
+            </aside>
+
+            <main class="app-content">
+                <header class="content-header">
+                    <div>
+                        <h1 class="content-title">Welcome, Cashier</h1>
+                        <p class="content-subtitle">Process sales quickly, update your profile, and keep the checkout flow moving.</p>
+                    </div>
+                    <div class="header-actions">
+                        <div class="status-pill">Store STO101</div>
+                        <button class="button-primary" type="button">Complete Sale</button>
+                    </div>
+                </header>
+
+                <section id="pos" class="section-panel pos-section">
+                    <div class="panel-heading">
+                        <div>
+                            <h2>Point of Sale</h2>
+                            <p class="panel-description">Choose products from the catalog and add them to the cart on the right.</p>
+                        </div>
+                    </div>
+
+                    <div class="pos-grid">
+                        <div class="catalog-panel">
+                            <div class="catalog-header">
+                                <h3>Products</h3>
+                                <p>Available items for this store</p>
+                            </div>
+                            <div class="product-grid" id="product-grid">
+                                <article class="product-card">
+                                    <h4>Wireless Keyboard</h4>
+                                    <p class="product-meta">Electronics · Qty 64</p>
+                                    <div class="product-price">$49.00</div>
+                                    <button class="button-primary add-to-cart" data-name="Wireless Keyboard" data-price="49">Add to cart</button>
+                                </article>
+                                <article class="product-card">
+                                    <h4>USB-C Hub</h4>
+                                    <p class="product-meta">Hardware · Qty 18</p>
+                                    <div class="product-price">$29.99</div>
+                                    <button class="button-primary add-to-cart" data-name="USB-C Hub" data-price="29.99">Add to cart</button>
+                                </article>
+                                <article class="product-card">
+                                    <h4>Fresh Coffee Beans</h4>
+                                    <p class="product-meta">Food · Qty 12</p>
+                                    <div class="product-price">$12.50</div>
+                                    <button class="button-primary add-to-cart" data-name="Fresh Coffee Beans" data-price="12.5">Add to cart</button>
+                                </article>
+                            </div>
+                        </div>
+
+                        <div class="payment-panel">
+                            <div class="payment-header">
+                                <h3>Current Sale</h3>
+                                <p>Cart summary</p>
+                            </div>
+                            <table class="cart-table">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Qty</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cart-body"></tbody>
+                            </table>
+                            <div class="payment-summary">
+                                <div class="summary-row"><span>Subtotal</span><strong id="subtotal">$0.00</strong></div>
+                                <div class="summary-row"><span>Tax</span><strong id="tax">$0.00</strong></div>
+                                <div class="summary-row total"><span>Total</span><strong id="total">$0.00</strong></div>
+                            </div>
+                            <button class="button-primary full-width" type="button">Process Payment</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="settings" class="section-panel settings-section" hidden>
+                    <div class="panel-heading">
+                        <div>
+                            <h2>Account Settings</h2>
+                            <p class="panel-description">Update your cashier profile details and password.</p>
+                        </div>
+                    </div>
+                    <form class="settings-form">
+                        <div class="form-row">
+                            <label>Username<input type="text" name="username" value="mike" /></label>
+                            <label>Contact<input type="tel" name="contact" value="0712345678" /></label>
+                        </div>
+                        <div class="form-row">
+                            <label>Store ID<input type="text" name="storeID" value="STO101" /></label>
+                            <label>Role<select name="userType"><option selected>cashier</option><option>admin</option></select></label>
+                        </div>
+                        <div class="form-row">
+                            <label>Password<input type="password" name="password" placeholder="Enter new password" /></label>
+                            <label>Confirm Password<input type="password" name="confirmPassword" placeholder="Confirm new password" /></label>
+                        </div>
+                        <button class="button-primary" type="submit">Save Changes</button>
+                    </form>
+                </section>
+            </main>
+        </div>
+    </body>
+</html>

@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, Query } from '@nestjs/common';
-import { StoresService } from './stores.service';
+import { StoresService, ValidationMode } from './stores.service';
 import { CreateStoreDto } from './dto/create-store.dto';
 import { UpdateStoreDto } from './dto/update-store.dto';
 
@@ -13,21 +13,18 @@ export class StoresController {
     return await this.storesService.createStore(createStoreDto);
   }
 
-  @Get('products')
-  @UsePipes(new ValidationPipe)
-  async getMyProducts(@Body('storeID') storeID: string) {
-    return await this.storesService.getMyProducts(storeID);
-  }
+ 
   @Get()
   @UsePipes(new ValidationPipe)
   async getAllStores() {
     return await this.storesService.getAllStores();
   }
 
+  
   @Get('/find/:id')
   @UsePipes(new ValidationPipe)
   async findStore(@Param('id') storeID: string) {
-    return await this.storesService.getStoreByID(storeID);
+    return await this.storesService.getStoreByID(storeID, ValidationMode.FINDING);
   }
 
   @Patch(':id')
